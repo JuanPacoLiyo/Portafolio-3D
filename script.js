@@ -14,20 +14,33 @@ document.addEventListener("DOMContentLoaded", () => {
     if (menuToggle && navMenu) {
 
         menuToggle.addEventListener("click", () => {
-            const isOpen = navMenu.classList.toggle("active");
+
+            const isOpen =
+                navMenu.classList.toggle("active");
 
             menuToggle.setAttribute(
                 "aria-expanded",
                 String(isOpen)
             );
+
         });
 
+
         navMenu.querySelectorAll("a").forEach(link => {
+
             link.addEventListener("click", () => {
+
                 navMenu.classList.remove("active");
-                menuToggle.setAttribute("aria-expanded", "false");
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
             });
+
         });
+
     }
 
 
@@ -38,7 +51,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const year = document.getElementById("year");
 
     if (year) {
-        year.textContent = new Date().getFullYear();
+
+        year.textContent =
+            new Date().getFullYear();
+
     }
 
 
@@ -48,66 +64,115 @@ document.addEventListener("DOMContentLoaded", () => {
        adds the project images.
     ========================================= */
 
-    document.querySelectorAll(".project-media img").forEach(img => {
+    document
+        .querySelectorAll(".project-media img")
+        .forEach(img => {
 
-        const fallback = img.parentElement.querySelector(".media-fallback");
+            const fallback =
+                img.parentElement.querySelector(
+                    ".media-fallback"
+                );
 
-        const hideFallback = () => {
-            if (fallback) {
-                fallback.style.opacity = "0";
+
+            const hideFallback = () => {
+
+                if (fallback) {
+                    fallback.style.opacity = "0";
+                }
+
+            };
+
+
+            const showFallback = () => {
+
+                if (fallback) {
+                    fallback.style.opacity = "1";
+                }
+
+                img.style.display = "none";
+
+            };
+
+
+            img.addEventListener(
+                "load",
+                hideFallback
+            );
+
+
+            img.addEventListener(
+                "error",
+                showFallback
+            );
+
+
+            if (
+                img.complete &&
+                img.naturalWidth > 0
+            ) {
+
+                hideFallback();
+
             }
-        };
 
-        const showFallback = () => {
-            if (fallback) {
-                fallback.style.opacity = "1";
-            }
-            img.style.display = "none";
-        };
-
-        img.addEventListener("load", hideFallback);
-        img.addEventListener("error", showFallback);
-
-        if (img.complete && img.naturalWidth > 0) {
-            hideFallback();
-        }
-    });
+        });
 
 
     /* =========================================
        SCROLL REVEAL
     ========================================= */
 
-    const revealElements = document.querySelectorAll(".reveal");
+    const revealElements =
+        document.querySelectorAll(".reveal");
+
 
     if ("IntersectionObserver" in window) {
 
-        const observer = new IntersectionObserver(
-            entries => {
+        const observer =
+            new IntersectionObserver(
 
-                entries.forEach(entry => {
+                entries => {
 
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("show");
-                        observer.unobserve(entry.target);
-                    }
+                    entries.forEach(entry => {
 
-                });
+                        if (
+                            entry.isIntersecting
+                        ) {
 
-            },
-            {
-                threshold: 0.08
-            }
-        );
+                            entry.target.classList.add(
+                                "show"
+                            );
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+
+                {
+                    threshold: 0.08
+                }
+
+            );
+
 
         revealElements.forEach(element => {
+
             observer.observe(element);
+
         });
+
 
     } else {
 
         revealElements.forEach(element => {
+
             element.classList.add("show");
+
         });
 
     }
@@ -117,27 +182,47 @@ document.addEventListener("DOMContentLoaded", () => {
        SCROLL PROGRESS
     ========================================= */
 
-    const progress = document.getElementById("scrollProgress");
+    const progress =
+        document.getElementById(
+            "scrollProgress"
+        );
+
 
     const updateProgress = () => {
 
-        const scrollTop = window.scrollY;
+        const scrollTop =
+            window.scrollY;
+
+
         const documentHeight =
-            document.documentElement.scrollHeight - window.innerHeight;
+            document.documentElement.scrollHeight -
+            window.innerHeight;
+
 
         const percentage =
             documentHeight > 0
                 ? (scrollTop / documentHeight) * 100
                 : 0;
 
+
         if (progress) {
-            progress.style.width = `${percentage}%`;
+
+            progress.style.width =
+                `${percentage}%`;
+
         }
+
     };
 
-    window.addEventListener("scroll", updateProgress, {
-        passive: true
-    });
+
+    window.addEventListener(
+        "scroll",
+        updateProgress,
+        {
+            passive: true
+        }
+    );
+
 
     updateProgress();
 
@@ -146,37 +231,65 @@ document.addEventListener("DOMContentLoaded", () => {
        PROJECT FILTER
     ========================================= */
 
-    const filters = document.querySelectorAll(".filter");
-    const projects = document.querySelectorAll(".small-card");
+    const filters =
+        document.querySelectorAll(".filter");
+
+
+    const projects =
+        document.querySelectorAll(".small-card");
+
 
     filters.forEach(filter => {
 
-        filter.addEventListener("click", () => {
+        filter.addEventListener(
+            "click",
+            () => {
 
-            filters.forEach(button => {
-                button.classList.remove("active");
-            });
+                filters.forEach(button => {
 
-            filter.classList.add("active");
+                    button.classList.remove(
+                        "active"
+                    );
 
-            const selectedFilter = filter.dataset.filter;
+                });
 
-            projects.forEach(project => {
 
-                const category = project.dataset.category;
+                filter.classList.add(
+                    "active"
+                );
 
-                if (
-                    selectedFilter === "all" ||
-                    category === selectedFilter
-                ) {
-                    project.classList.remove("is-hidden");
-                } else {
-                    project.classList.add("is-hidden");
-                }
 
-            });
+                const selectedFilter =
+                    filter.dataset.filter;
 
-        });
+
+                projects.forEach(project => {
+
+                    const category =
+                        project.dataset.category;
+
+
+                    if (
+                        selectedFilter === "all" ||
+                        category === selectedFilter
+                    ) {
+
+                        project.classList.remove(
+                            "is-hidden"
+                        );
+
+                    } else {
+
+                        project.classList.add(
+                            "is-hidden"
+                        );
+
+                    }
+
+                });
+
+            }
+        );
 
     });
 
@@ -185,67 +298,166 @@ document.addEventListener("DOMContentLoaded", () => {
        PROJECT MODAL
     ========================================= */
 
-    const modal = document.getElementById("projectModal");
-    const modalClose = document.getElementById("modalClose");
+    const modal =
+        document.getElementById(
+            "projectModal"
+        );
 
-    const modalTitle = document.getElementById("modalTitle");
-    const modalRole = document.getElementById("modalRole");
-    const modalDescription = document.getElementById("modalDescription");
-    const modalMetaRole = document.getElementById("modalMetaRole");
-    const modalTools = document.getElementById("modalTools");
-    const modalSketchfab = document.getElementById("modalSketchfab");
 
-    const projectCards = document.querySelectorAll(".project-card");
+    const modalClose =
+        document.getElementById(
+            "modalClose"
+        );
+
+
+    const modalTitle =
+        document.getElementById(
+            "modalTitle"
+        );
+
+
+    const modalRole =
+        document.getElementById(
+            "modalRole"
+        );
+
+
+    const modalDescription =
+        document.getElementById(
+            "modalDescription"
+        );
+
+
+    const modalMetaRole =
+        document.getElementById(
+            "modalMetaRole"
+        );
+
+
+    const modalTools =
+        document.getElementById(
+            "modalTools"
+        );
+
+
+    const modalSketchfab =
+        document.getElementById(
+            "modalSketchfab"
+        );
+
+
+    const projectCards =
+        document.querySelectorAll(
+            ".project-card"
+        );
+
 
     const openModal = card => {
 
         if (!modal) return;
 
-        modalTitle.textContent =
-            card.dataset.title || "Project";
 
-        modalRole.textContent =
-            card.dataset.category
-                ? card.dataset.category.replace("-", " ").toUpperCase()
-                : "PROJECT";
+        if (modalTitle) {
 
-        modalDescription.textContent =
-            card.dataset.description ||
-            "Descripción pendiente.";
-
-        modalMetaRole.textContent =
-            card.dataset.role ||
-            "3D Artist";
-
-        modalTools.textContent =
-            card.dataset.tools ||
-            "Blender";
-
-        const sketchfabURL = card.dataset.sketchfab;
-
-        if (sketchfabURL) {
-
-            modalSketchfab.href = sketchfabURL;
-            modalSketchfab.removeAttribute("aria-disabled");
-            modalSketchfab.textContent =
-                "Ver proyecto en Sketchfab ↗";
-
-        } else {
-
-            modalSketchfab.href = "#";
-            modalSketchfab.setAttribute(
-                "aria-disabled",
-                "true"
-            );
-            modalSketchfab.textContent =
-                "Sketchfab — enlace pendiente";
+            modalTitle.textContent =
+                card.dataset.title ||
+                "Project";
 
         }
 
-        modal.classList.add("active");
-        modal.setAttribute("aria-hidden", "false");
 
-        document.body.classList.add("modal-open");
+        if (modalRole) {
+
+            modalRole.textContent =
+                card.dataset.category
+                    ? card.dataset.category
+                        .replace("-", " ")
+                        .toUpperCase()
+                    : "PROJECT";
+
+        }
+
+
+        if (modalDescription) {
+
+            modalDescription.textContent =
+                card.dataset.description ||
+                "Descripción pendiente.";
+
+        }
+
+
+        if (modalMetaRole) {
+
+            modalMetaRole.textContent =
+                card.dataset.role ||
+                "3D Artist";
+
+        }
+
+
+        if (modalTools) {
+
+            modalTools.textContent =
+                card.dataset.tools ||
+                "Blender";
+
+        }
+
+
+        const sketchfabURL =
+            card.dataset.sketchfab;
+
+
+        if (modalSketchfab) {
+
+            if (sketchfabURL) {
+
+                modalSketchfab.href =
+                    sketchfabURL;
+
+
+                modalSketchfab.removeAttribute(
+                    "aria-disabled"
+                );
+
+
+                modalSketchfab.textContent =
+                    "Ver proyecto en Sketchfab ↗";
+
+
+            } else {
+
+                modalSketchfab.href = "#";
+
+
+                modalSketchfab.setAttribute(
+                    "aria-disabled",
+                    "true"
+                );
+
+
+                modalSketchfab.textContent =
+                    "Sketchfab — enlace pendiente";
+
+            }
+
+        }
+
+
+        modal.classList.add("active");
+
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
+        document.body.classList.add(
+            "modal-open"
+        );
+
     };
 
 
@@ -253,46 +465,86 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!modal) return;
 
-        modal.classList.remove("active");
-        modal.setAttribute("aria-hidden", "true");
 
-        document.body.classList.remove("modal-open");
+        modal.classList.remove(
+            "active"
+        );
+
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+
+        document.body.classList.remove(
+            "modal-open"
+        );
+
     };
 
 
     projectCards.forEach(card => {
 
-        card.addEventListener("click", event => {
+        card.addEventListener(
+            "click",
+            event => {
 
-            /*
-             * Prevent the modal from triggering twice if
-             * a future external link is added inside a card.
-             */
-            if (event.target.closest("a")) {
-                return;
+                /*
+                 * Prevent the modal from triggering twice if
+                 * a future external link is added inside a card.
+                 */
+
+                if (
+                    event.target.closest("a")
+                ) {
+
+                    return;
+
+                }
+
+
+                openModal(card);
+
             }
-
-            openModal(card);
-
-        });
+        );
 
     });
 
 
     if (modalClose) {
-        modalClose.addEventListener("click", closeModal);
+
+        modalClose.addEventListener(
+            "click",
+            closeModal
+        );
+
     }
 
-    document.querySelectorAll("[data-close-modal]").forEach(element => {
-        element.addEventListener("click", closeModal);
-    });
 
-    document.addEventListener("keydown", event => {
+    document
+        .querySelectorAll("[data-close-modal]")
+        .forEach(element => {
 
-        if (event.key === "Escape") {
-            closeModal();
+            element.addEventListener(
+                "click",
+                closeModal
+            );
+
+        });
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+
+                closeModal();
+
+            }
+
         }
-
-    });
+    );
 
 });
