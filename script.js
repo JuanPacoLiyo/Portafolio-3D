@@ -1,8 +1,10 @@
 /* =========================================
-   CS — 3D ARTIST PORTFOLIO V2
+   CS — 3D ARTIST PORTFOLIO
+   ARTISTIC VERSION
 ========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+
 
     /* =========================================
        MOBILE MENU
@@ -11,12 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuToggle = document.getElementById("menuToggle");
     const navMenu = document.getElementById("navMenu");
 
+
     if (menuToggle && navMenu) {
 
         menuToggle.addEventListener("click", () => {
 
             const isOpen =
                 navMenu.classList.toggle("active");
+
 
             menuToggle.setAttribute(
                 "aria-expanded",
@@ -50,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const year = document.getElementById("year");
 
+
     if (year) {
 
         year.textContent =
@@ -60,8 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =========================================
        IMAGE FALLBACK
-       Keeps the layout clean until the user
-       adds the project images.
     ========================================= */
 
     document
@@ -69,15 +72,16 @@ document.addEventListener("DOMContentLoaded", () => {
         .forEach(img => {
 
             const fallback =
-                img.parentElement.querySelector(
-                    ".media-fallback"
-                );
+                img.parentElement
+                    .querySelector(".media-fallback");
 
 
             const hideFallback = () => {
 
                 if (fallback) {
+
                     fallback.style.opacity = "0";
+
                 }
 
             };
@@ -86,7 +90,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const showFallback = () => {
 
                 if (fallback) {
+
                     fallback.style.opacity = "1";
+
                 }
 
                 img.style.display = "none";
@@ -126,11 +132,12 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".reveal");
 
 
-    if ("IntersectionObserver" in window) {
+    if (
+        "IntersectionObserver" in window
+    ) {
 
         const observer =
             new IntersectionObserver(
-
                 entries => {
 
                     entries.forEach(entry => {
@@ -139,9 +146,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             entry.isIntersecting
                         ) {
 
-                            entry.target.classList.add(
-                                "show"
-                            );
+                            entry.target
+                                .classList
+                                .add("show");
+
 
                             observer.unobserve(
                                 entry.target
@@ -152,11 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
 
                 },
-
                 {
                     threshold: 0.08
                 }
-
             );
 
 
@@ -165,7 +171,6 @@ document.addEventListener("DOMContentLoaded", () => {
             observer.observe(element);
 
         });
-
 
     } else {
 
@@ -195,7 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const documentHeight =
-            document.documentElement.scrollHeight -
+            document.documentElement
+                .scrollHeight -
             window.innerHeight;
 
 
@@ -409,7 +415,9 @@ document.addEventListener("DOMContentLoaded", () => {
             card.dataset.sketchfab;
 
 
-        if (modalSketchfab) {
+        if (
+            modalSketchfab
+        ) {
 
             if (sketchfabURL) {
 
@@ -417,18 +425,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     sketchfabURL;
 
 
-                modalSketchfab.removeAttribute(
-                    "aria-disabled"
-                );
+                modalSketchfab
+                    .removeAttribute(
+                        "aria-disabled"
+                    );
 
 
                 modalSketchfab.textContent =
                     "Ver proyecto en Sketchfab ↗";
 
-
             } else {
 
-                modalSketchfab.href = "#";
+                modalSketchfab.href =
+                    "#";
 
 
                 modalSketchfab.setAttribute(
@@ -446,7 +455,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         modal.classList.add("active");
-
 
         modal.setAttribute(
             "aria-hidden",
@@ -491,8 +499,9 @@ document.addEventListener("DOMContentLoaded", () => {
             event => {
 
                 /*
-                 * Prevent the modal from triggering twice if
-                 * a future external link is added inside a card.
+                 * Prevent the modal from
+                 * triggering when clicking
+                 * an external link.
                  */
 
                 if (
@@ -512,6 +521,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    /* =========================================
+       CLOSE MODAL BUTTON
+    ========================================= */
+
     if (modalClose) {
 
         modalClose.addEventListener(
@@ -522,8 +535,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =========================================
+       CLOSE MODAL BACKDROP
+    ========================================= */
+
     document
-        .querySelectorAll("[data-close-modal]")
+        .querySelectorAll(
+            "[data-close-modal]"
+        )
         .forEach(element => {
 
             element.addEventListener(
@@ -534,17 +553,90 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
 
+    /* =========================================
+       ESCAPE TO CLOSE MODAL
+    ========================================= */
+
     document.addEventListener(
         "keydown",
         event => {
 
-            if (event.key === "Escape") {
+            if (
+                event.key === "Escape"
+            ) {
 
                 closeModal();
 
             }
 
         }
+    );
+
+
+    /* =========================================
+       SUBTLE MOUSE PARALLAX
+       Desktop only
+    ========================================= */
+
+    const hero =
+        document.querySelector(".hero");
+
+
+    if (
+        hero &&
+        window.innerWidth > 900
+    ) {
+
+        window.addEventListener(
+            "mousemove",
+            event => {
+
+                const x =
+                    (event.clientX /
+                        window.innerWidth -
+                        0.5) *
+                    8;
+
+
+                const y =
+                    (event.clientY /
+                        window.innerHeight -
+                        0.5) *
+                    8;
+
+
+                hero.style.setProperty(
+                    "--mouse-x",
+                    `${x}px`
+                );
+
+
+                hero.style.setProperty(
+                    "--mouse-y",
+                    `${y}px`
+                );
+
+            },
+            {
+                passive: true
+            }
+        );
+
+    }
+
+
+    /* =========================================
+       CONSOLE MESSAGE
+    ========================================= */
+
+    console.log(
+        "%cCS — 3D Artist Portfolio",
+        "font-size: 18px; font-weight: bold;"
+    );
+
+
+    console.log(
+        "Blender • Unity • 3D Art"
     );
 
 });
