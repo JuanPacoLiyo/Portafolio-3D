@@ -136,7 +136,7 @@ body::after {
 
     position: fixed;
 
-    inset: -50%;
+    inset: -10%;
 
     pointer-events: none;
 
@@ -145,9 +145,11 @@ body::after {
     opacity: 0.045;
 
     background-image:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
 
     animation: grainMove 0.25s steps(2) infinite;
+
+    will-change: transform;
 }
 
 
@@ -259,9 +261,15 @@ button {
 
     left: 0;
 
-    width: 0%;
+    width: 100%;
 
     height: 3px;
+
+    transform: scaleX(0);
+
+    transform-origin: left;
+
+    will-change: transform;
 
     background:
         linear-gradient(
@@ -533,6 +541,8 @@ button {
 .hero {
 
     min-height: 100vh;
+
+    min-height: 100svh;
 
     padding-top: 150px;
 
@@ -2291,4 +2301,183 @@ button {
 
         transform: none;
     }
+}
+
+
+/* =========================================
+   MOBILE / TOUCH PERFORMANCE
+   Quita efectos costosos en celular
+========================================= */
+
+@media (max-width: 900px), (hover: none) {
+
+    /* Grano animado: desactivado */
+    body::after {
+        display: none;
+    }
+
+    /* Fondo fijo más simple */
+    body::before {
+        mask-image: none;
+        -webkit-mask-image: none;
+        opacity: 0.6;
+    }
+
+    /* Sin blur sobre contenido en movimiento */
+    .site-header {
+        background: rgba(76, 73, 86, 0.97);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .nav-menu {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .modal-backdrop {
+        background: rgba(43, 42, 49, 0.92);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    /* Orbe del hero: sin blur ni animación */
+    .hero::before {
+        filter: none;
+        animation: none;
+    }
+
+    /* Sin efectos hover que en táctil no aplican */
+    .project-card::before {
+        display: none;
+    }
+
+    .project-card:hover,
+    .button:hover,
+    .tool:hover {
+        transform: none;
+    }
+
+    .project-card:hover .project-media img,
+    .tool:hover .tool-image img {
+        transform: none;
+    }
+
+    /* Reveal más rápido */
+    .reveal {
+        transition-duration: 0.45s;
+    }
+}
+
+
+
+/* =========================================
+   3D VIEWER EN LAS TARJETAS
+========================================= */
+
+.card-3d-button {
+
+    position: absolute;
+
+    left: 15px;
+
+    bottom: 15px;
+
+    padding: 8px 12px;
+
+    border: 1px solid var(--border-light);
+
+    background: rgba(76, 73, 86, 0.82);
+
+    color: var(--white-blue);
+
+    font-family: var(--body-font);
+
+    font-size: 0.67rem;
+
+    cursor: pointer;
+
+    z-index: 3;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.card-3d-button:hover,
+.card-3d-button:focus-visible {
+
+    background: var(--blue);
+
+    color: var(--bg-dark);
+}
+
+
+.card-viewer {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 4;
+
+    background: #000;
+}
+
+
+.card-viewer iframe {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    border: 0;
+}
+
+
+.card-viewer-close {
+
+    position: absolute;
+
+    top: 10px;
+
+    right: 10px;
+
+    z-index: 5;
+
+    padding: 7px 11px;
+
+    border: 1px solid var(--border-light);
+
+    background: rgba(76, 73, 86, 0.9);
+
+    color: var(--white-blue);
+
+    font-family: var(--body-font);
+
+    font-size: 0.67rem;
+
+    cursor: pointer;
+}
+
+
+.card-viewer-close:hover,
+.card-viewer-close:focus-visible {
+
+    background: var(--blue);
+
+    color: var(--bg-dark);
+}
+
+
+/* Evita que la tarjeta "salte" mientras se gira el modelo */
+
+.project-card.is-viewing:hover {
+
+    transform: none;
+
+    box-shadow: none;
 }
