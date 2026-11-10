@@ -161,99 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* =========================================
-       PROJECT MODAL
-    ========================================= */
-
-    const modal = document.getElementById("projectModal");
-    const modalClose = document.getElementById("modalClose");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalRole = document.getElementById("modalRole");
-    const modalDescription = document.getElementById("modalDescription");
-    const modalMetaRole = document.getElementById("modalMetaRole");
-    const modalTools = document.getElementById("modalTools");
-    const modalSketchfab = document.getElementById("modalSketchfab");
-
     const projectCards = document.querySelectorAll(".project-card");
-
-    const openModal = card => {
-
-        if (!modal) return;
-
-        if (modalTitle) {
-            modalTitle.textContent = card.dataset.title || "Project";
-        }
-
-        if (modalRole) {
-            modalRole.textContent = card.dataset.category
-                ? card.dataset.category.replace("-", " ").toUpperCase()
-                : "PROJECT";
-        }
-
-        if (modalDescription) {
-            modalDescription.textContent =
-                card.dataset.description || "Descripción pendiente.";
-        }
-
-        if (modalMetaRole) {
-            modalMetaRole.textContent = card.dataset.role || "3D Artist";
-        }
-
-        if (modalTools) {
-            modalTools.textContent = card.dataset.tools || "Blender";
-        }
-
-        const sketchfabURL = card.dataset.sketchfab;
-
-        if (modalSketchfab) {
-
-            if (sketchfabURL) {
-                modalSketchfab.href = sketchfabURL;
-                modalSketchfab.removeAttribute("aria-disabled");
-                modalSketchfab.textContent = "Ver proyecto en Sketchfab ↗";
-            } else {
-                modalSketchfab.href = "#";
-                modalSketchfab.setAttribute("aria-disabled", "true");
-                modalSketchfab.textContent = "Sketchfab — enlace pendiente";
-            }
-        }
-
-        modal.classList.add("active");
-        modal.setAttribute("aria-hidden", "false");
-        document.body.classList.add("modal-open");
-    };
-
-    const closeModal = () => {
-
-        if (!modal) return;
-
-        modal.classList.remove("active");
-        modal.setAttribute("aria-hidden", "true");
-        document.body.classList.remove("modal-open");
-    };
-
-    projectCards.forEach(card => {
-
-        card.addEventListener("click", event => {
-
-            // No abrir el modal al hacer click en un enlace externo
-            if (event.target.closest("a")) return;
-
-            openModal(card);
-        });
-    });
-
-    if (modalClose) {
-        modalClose.addEventListener("click", closeModal);
-    }
-
-    document.querySelectorAll("[data-close-modal]").forEach(element => {
-        element.addEventListener("click", closeModal);
-    });
-
-    document.addEventListener("keydown", event => {
-        if (event.key === "Escape") closeModal();
-    });
 
     /* =========================================
        3D VIEWER EN LAS TARJETAS (Sketchfab)
@@ -332,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
         button.textContent = "Girar en 3D";
 
         button.addEventListener("click", event => {
-            // No abrir el modal al presionar este botón
+            // Evita que el click llegue a la tarjeta
             event.stopPropagation();
             openCardViewer(card, modelId);
         });

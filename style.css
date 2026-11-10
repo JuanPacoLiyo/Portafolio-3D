@@ -2481,3 +2481,380 @@ button {
 
     box-shadow: none;
 }
+
+
+/* =========================================================
+   ARTIST THEME
+   Lienzo oscuro + tipografía editorial + obras como láminas
+========================================================= */
+
+:root {
+    --bg: #15131c;
+    --bg-dark: #0f0d15;
+    --surface: #2a2736;
+    --surface-dark: #1d1b27;
+    --paper: #e9e3d7;
+    --text: #dbe7f7;
+    --muted: rgba(219, 231, 247, 0.66);
+    --border: rgba(202, 229, 255, 0.16);
+    --border-light: rgba(202, 229, 255, 0.3);
+    --title-font: "Instrument Serif", "Times New Roman", serif;
+}
+
+body {
+    background:
+        radial-gradient(ellipse 60% 40% at 12% 6%, rgba(137, 187, 254, 0.16), transparent 70%),
+        radial-gradient(ellipse 50% 40% at 92% 55%, rgba(97, 93, 108, 0.35), transparent 70%),
+        var(--bg);
+}
+
+body::before { display: none; }
+body::after { opacity: 0.06; }
+.section::before { display: none; }
+
+::selection { background: var(--paper); color: var(--bg-dark); }
+
+/* Serif de una sola altura: sin negrita falsa */
+h1, h2, h3, .brand, .tool-info span, .modal-meta strong { font-weight: 400; }
+
+.scroll-progress { height: 2px; background: var(--paper); box-shadow: none; }
+
+/* Header */
+.site-header {
+    background: rgba(15, 13, 21, 0.92);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.brand { font-size: 2rem; font-style: italic; letter-spacing: -0.01em; }
+
+.nav-menu a {
+    font-family: var(--title-font);
+    font-size: 1.2rem;
+    color: var(--muted);
+}
+
+/* Etiquetas: itálica serif, sin mayúsculas */
+.eyebrow,
+.project-type,
+.skill-level,
+.hero-bottom span,
+.skill-index,
+.process-step > span {
+    font-family: var(--title-font);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.15rem;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.eyebrow { color: var(--blue); }
+.hero-bottom span { color: var(--muted); }
+
+/* Títulos grandes */
+.hero-copy h1 {
+    font-size: clamp(4.6rem, 11.5vw, 10.5rem);
+    line-height: 0.86;
+    letter-spacing: -0.025em;
+}
+
+.section-heading h2,
+.about-title h2 {
+    font-size: clamp(3rem, 6vw, 5.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+}
+
+.contact-inner h2 {
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.85;
+    letter-spacing: -0.03em;
+}
+
+.hero-copy h1 span,
+.section-heading h2 span,
+.about-title h2 span,
+.contact-inner h2 span { font-style: italic; }
+
+.hero-description { font-size: 1.05rem; }
+
+/* Botones */
+.button { border-radius: 999px; padding: 14px 28px; font-size: 0.9rem; }
+
+.button-primary {
+    background: var(--paper);
+    border-color: var(--paper);
+    color: var(--bg-dark);
+}
+
+.button-primary:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+}
+
+/* Hero: lámina enmarcada sobre papel */
+.hero-frame {
+    aspect-ratio: 5 / 6;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    rotate: 1.4deg;
+}
+
+.hero-frame::before,
+.hero-frame::after,
+.hero-placeholder::after { display: none; }
+
+.hero-placeholder {
+    padding: 16px 16px 66px;
+    background: var(--paper);
+    box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.75);
+}
+
+.hero-label {
+    left: 22px;
+    bottom: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: #3a3544;
+    font-family: var(--title-font);
+    font-style: italic;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+}
+
+/* Proyectos: láminas con paspartú */
+.project-card,
+.project-card:hover {
+    border: none;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.project-card::before { display: none; }
+
+.project-card.reveal {
+    transition: opacity 0.7s ease, transform 0.5s ease, rotate 0.5s ease;
+}
+
+.project-media {
+    padding: 12px;
+    background: var(--paper);
+    box-shadow: 0 26px 40px -24px rgba(0, 0, 0, 0.75);
+}
+
+.project-card:hover .project-media img { transform: none; }
+
+.media-fallback { color: #6b6577; }
+
+.project-number {
+    top: 12px;
+    left: 12px;
+    padding: 2px 12px 4px;
+    background: var(--paper);
+    color: #2a2633;
+    font-family: var(--title-font);
+    font-style: italic;
+    font-size: 1rem;
+    letter-spacing: 0;
+}
+
+.project-number::before { content: "Nº "; }
+
+.project-open,
+.card-3d-button {
+    bottom: 26px;
+    border-radius: 999px;
+    background: rgba(15, 13, 21, 0.85);
+    font-size: 0.72rem;
+}
+
+.project-open { right: 26px; }
+.card-3d-button { left: 26px; }
+
+.card-viewer-close { top: 24px; right: 24px; border-radius: 999px; }
+
+.project-info { padding: 22px 4px 6px; }
+.project-info h3 { font-size: 2rem; line-height: 1.05; }
+.project-type { margin-bottom: 4px; color: var(--blue); }
+.project-summary { padding: 0 4px 10px; font-size: 0.88rem; }
+
+/* Filtros y CTA */
+.filter { border-radius: 999px; padding: 8px 18px; font-size: 0.8rem; }
+
+.sketchfab-cta {
+    padding: 38px 0;
+    border-width: 1px 0;
+    background: none;
+}
+
+.sketchfab-cta::after { display: none; }
+
+/* Habilidades, herramientas, proceso */
+.skill-row h3 { font-size: 2.3rem; line-height: 1; }
+.tool { background: rgba(202, 229, 255, 0.03); }
+.tool-info span { font-size: 2rem; }
+.process-step h3 { font-size: 1.7rem; }
+
+/* Sobre mí */
+.about-lead {
+    font-family: var(--title-font);
+    font-size: 2rem;
+    line-height: 1.2;
+    color: var(--text);
+}
+
+.tag-list span { border-radius: 999px; padding: 7px 14px; }
+
+/* Modal */
+.modal-window {
+    background: #1b1824;
+    box-shadow: 0 30px 100px rgba(0, 0, 0, 0.6);
+}
+
+.modal-backdrop { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(8, 7, 12, 0.88); }
+.modal-header h2 { font-size: 3.4rem; line-height: 1; }
+.modal-meta span { font-size: 0.75rem; }
+
+/* Hover solo con mouse */
+@media (hover: hover) {
+    .project-card.reveal.show:hover { transform: translateY(-6px); rotate: 0deg; }
+}
+
+/* Galería escalonada solo en escritorio */
+@media (min-width: 701px) {
+    .featured-grid .project-card:nth-child(3n + 1) { rotate: -0.7deg; }
+    .featured-grid .project-card:nth-child(3n + 2) { rotate: 0.5deg; }
+    .featured-grid .project-card:nth-child(3n)     { rotate: -0.3deg; }
+}
+
+@media (min-width: 1001px) {
+    .featured-grid .project-card:nth-child(3n + 2) { margin-top: 40px; }
+}
+
+@media (max-width: 1000px) {
+    .hero-frame { max-width: 520px; }
+}
+
+@media (max-width: 700px) {
+    .hero-copy h1 { font-size: clamp(4rem, 19vw, 6.5rem); }
+    .contact-inner h2 { font-size: clamp(3.6rem, 17vw, 6rem); }
+    .nav-menu { background: rgba(15, 13, 21, 0.98); }
+    .nav-menu a { font-size: 1.5rem; }
+    .project-info h3 { font-size: 1.8rem; }
+    .skill-row h3 { font-size: 1.9rem; }
+    .about-lead { font-size: 1.6rem; }
+    .modal-header h2 { font-size: 2.5rem; }
+    .project-media { padding: 10px; }
+    .project-open { right: 20px; bottom: 20px; }
+    .card-3d-button { left: 20px; bottom: 20px; }
+}
+
+
+/* =========================================================
+   FICHA DE PROYECTO VISIBLE (sin clic)
+   Rol, herramientas y aporte siempre a la vista
+========================================================= */
+
+.project-card,
+.project-card:hover { cursor: default; }
+
+.project-card.reveal.show:hover { transform: none; rotate: 0deg; }
+
+/* Proyectos destacados: fila con imagen + ficha */
+.featured-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 72px;
+}
+
+.featured-grid .project-card:nth-child(n) { rotate: 0deg; margin-top: 0; }
+
+.project-featured {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 52px;
+    align-items: center;
+}
+
+.project-featured:nth-child(even) .project-media { order: 2; }
+
+.project-featured .project-media { aspect-ratio: 16 / 11; }
+
+.project-featured .project-body h3 { font-size: clamp(2.2rem, 4vw, 3.2rem); }
+
+.project-summary {
+    padding: 0;
+    margin-top: 14px;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* Ficha */
+.project-body { min-width: 0; }
+
+.project-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 24px;
+    margin: 26px 0 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+}
+
+.project-facts dt {
+    margin-bottom: 3px;
+    color: var(--blue);
+    font-family: var(--title-font);
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+.project-facts dd {
+    margin: 0;
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.project-facts .fact-wide { grid-column: 1 / -1; }
+.project-facts .fact-wide dd { color: var(--muted); }
+
+/* Más trabajos: tarjetas con la misma ficha */
+.small-card { display: flex; flex-direction: column; }
+
+.small-card .project-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.small-card .project-body h3 { font-size: 1.8rem; }
+
+.small-card .project-facts {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 18px 0 22px;
+    padding-top: 18px;
+}
+
+.small-card .project-link { margin-top: auto; align-self: flex-start; }
+
+.project-body { padding-top: 4px; }
+.small-card .project-body { padding-top: 20px; }
+
+@media (max-width: 900px) {
+    .featured-grid { gap: 56px; }
+    .project-featured { grid-template-columns: 1fr; gap: 26px; }
+    .project-featured:nth-child(even) .project-media { order: 0; }
+}
+
+@media (max-width: 560px) {
+    .project-facts { grid-template-columns: 1fr; }
+}
+
+.project-body h3 { line-height: 1.05; margin: 4px 0 0; }
