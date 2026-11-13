@@ -2858,3 +2858,11 @@ h1, h2, h3, .brand, .tool-info span, .modal-meta strong { font-weight: 400; }
 }
 
 .project-body h3 { line-height: 1.05; margin: 4px 0 0; }
+
+
+/* Varios enlaces en una misma ficha */
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
